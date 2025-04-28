@@ -32,6 +32,7 @@ function vote(channel) {
     finishVoting();
   }
 }
+  totalVotes++;
 
 
 function finishVoting() {
