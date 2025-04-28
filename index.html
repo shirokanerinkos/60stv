@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Retro TV Controller</title>
+  <title>Retro TV Voting</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="tv-screen" id="tvScreen">
-    <p id="channelDisplay">TV OFF</p>
+    <p id="channelDisplay">Vote for a Channel!</p>
+    <div id="scoreboard"></div>
   </div>
 
   <div class="remote-control">
-    <button id="powerButton" class="btn power">Power</button>
-    <button id="channelUp" class="btn">Channel +</button>
-    <button id="channelDown" class="btn">Channel -</button>
+    <button id="voteChannel1" class="btn">Vote Channel 1</button>
+    <button id="voteChannel2" class="btn">Vote Channel 2</button>
+    <button id="voteChannel3" class="btn">Vote Channel 3</button>
+    <button id="voteChannel4" class="btn">Vote Channel 4</button>
+    <button id="finishVoting" class="btn power">Finish Voting</button>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
