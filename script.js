@@ -1,3 +1,7 @@
+const tvScreen = document.getElementById('tvScreen');
+const channelDisplay = document.getElementById('channelDisplay');
+const scoreboard = document.getElementById('scoreboard');
+
 function finishVoting() {
   // Disable voting immediately
   disableVotingButtons();
