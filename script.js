@@ -24,7 +24,7 @@ const channels = {
 };
 
 let totalVotes = 0;
-const maxVotes = 10; // You can change this
+const maxVotes = 10;
 
 // Function to vote for a channel
 function vote(channel) {
