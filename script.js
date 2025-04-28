@@ -2,6 +2,9 @@ const tvScreen = document.getElementById('tvScreen');
 const channelDisplay = document.getElementById('channelDisplay');
 const scoreboard = document.getElementById('scoreboard');
 
+let totalVotes = 0;
+const maxVotes = 10; // Or whatever you want
+
 function finishVoting() {
   // Disable voting immediately
   disableVotingButtons();
@@ -63,9 +66,20 @@ document.getElementById('voteChannel1').addEventListener('click', () => vote(1))
 document.getElementById('voteChannel2').addEventListener('click', () => vote(2));
 document.getElementById('voteChannel3').addEventListener('click', () => vote(3));
 document.getElementById('voteChannel4').addEventListener('click', () => vote(4));
-document.getElementById('voteChannel5').addEventListener('click', () => vote(5)); // New
-document.getElementById('voteChannel6').addEventListener('click', () => vote(6)); // New
+document.getElementById('voteChannel5').addEventListener('click', () => vote(5));
+document.getElementById('voteChannel6').addEventListener('click', () => vote(6));
 document.getElementById('finishVoting').addEventListener('click', finishVoting);
+
+function vote(channel) {
+  votes[channel]++;
+  totalVotes++;
+  updateScoreboard();
+
+  if (totalVotes >= maxVotes) {
+    finishVoting();
+  }
+}
+
 
 function disableVotingButtons() {
   document.getElementById('voteChannel1').disabled = true;
