@@ -1,51 +1,70 @@
-const powerButton = document.getElementById('powerButton');
-const channelUp = document.getElementById('channelUp');
-const channelDown = document.getElementById('channelDown');
 const tvScreen = document.getElementById('tvScreen');
 const channelDisplay = document.getElementById('channelDisplay');
+const scoreboard = document.getElementById('scoreboard');
 
-let powerOn = false;
-let channel = 1;
+const votes = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0
+};
 
-const channels = [
-  { background: 'black', text: 'TV OFF' },
-  { background: '#7f00ff', text: 'Channel 1' },
-  { background: '#ff4c4c', text: 'Channel 2' },
-  { background: '#00bfff', text: 'Channel 3' },
-  { background: '#00ff7f', text: 'Channel 4' }
-];
+const channels = {
+  1: { background: '#7f00ff', text: 'Channel 1' },
+  2: { background: '#ff4c4c', text: 'Channel 2' },
+  3: { background: '#00bfff', text: 'Channel 3' },
+  4: { background: '#00ff7f', text: 'Channel 4' }
+};
 
-function updateScreen() {
-  if (!powerOn) {
-    tvScreen.style.backgroundColor = channels[0].background;
-    channelDisplay.innerText = channels[0].text;
-  } else {
-    const currentChannel = channels[channel] || channels[1];
-    tvScreen.style.backgroundColor = currentChannel.background;
-    channelDisplay.innerText = currentChannel.text;
-  }
+function vote(channelNumber) {
+  votes[channelNumber]++;
+  updateScoreboard();
 }
 
-powerButton.addEventListener('click', () => {
-  powerOn = !powerOn;
-  updateScreen();
-});
+function finishVoting() {
+  // Find the channel with the most votes
+  let winningChannel = 1;
+  let highestVotes = 0;
 
-channelUp.addEventListener('click', () => {
-  if (powerOn) {
-    channel++;
-    if (channel >= channels.length) channel = 1;
-    updateScreen();
+  for (let channel in votes) {
+    if (votes[channel] > highestVotes) {
+      highestVotes = votes[channel];
+      winningChannel = channel;
+    }
   }
-});
 
-channelDown.addEventListener('click', () => {
-  if (powerOn) {
-    channel--;
-    if (channel < 1) channel = channels.length - 1;
-    updateScreen();
-  }
-});
+  // Update the screen
+  const channelInfo = channels[winningChannel];
+  tvScreen.style.backgroundColor = channelInfo.background;
+  channelDisplay.innerText = `Winner: ${channelInfo.text} (${highestVotes} votes)`;
+  scoreboard.innerHTML = ''; // Clear scoreboard
 
-// Start with TV off
-updateScreen();
+  disableVotingButtons();
+}
+
+function updateScoreboard() {
+  scoreboard.innerHTML = `
+    <p>Channel 1: ${votes[1]} votes</p>
+    <p>Channel 2: ${votes[2]} votes</p>
+    <p>Channel 3: ${votes[3]} votes</p>
+    <p>Channel 4: ${votes[4]} votes</p>
+  `;
+}
+
+function disableVotingButtons() {
+  document.getElementById('voteChannel1').disabled = true;
+  document.getElementById('voteChannel2').disabled = true;
+  document.getElementById('voteChannel3').disabled = true;
+  document.getElementById('voteChannel4').disabled = true;
+  document.getElementById('finishVoting').disabled = true;
+}
+
+// Hook up buttons
+document.getElementById('voteChannel1').addEventListener('click', () => vote(1));
+document.getElementById('voteChannel2').addEventListener('click', () => vote(2));
+document.getElementById('voteChannel3').addEventListener('click', () => vote(3));
+document.getElementById('voteChannel4').addEventListener('click', () => vote(4));
+document.getElementById('finishVoting').addEventListener('click', finishVoting);
+
+// Show scoreboard immediately
+updateScoreboard();
