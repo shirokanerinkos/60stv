@@ -55,3 +55,20 @@ function updateScoreboard() {
   `;
 }
 
+document.getElementById('voteChannel1').addEventListener('click', () => vote(1));
+document.getElementById('voteChannel2').addEventListener('click', () => vote(2));
+document.getElementById('voteChannel3').addEventListener('click', () => vote(3));
+document.getElementById('voteChannel4').addEventListener('click', () => vote(4));
+document.getElementById('voteChannel5').addEventListener('click', () => vote(5)); // New
+document.getElementById('voteChannel6').addEventListener('click', () => vote(6)); // New
+document.getElementById('finishVoting').addEventListener('click', finishVoting);
+
+function disableVotingButtons() {
+  document.getElementById('voteChannel1').disabled = true;
+  document.getElementById('voteChannel2').disabled = true;
+  document.getElementById('voteChannel3').disabled = true;
+  document.getElementById('voteChannel4').disabled = true;
+  document.getElementById('voteChannel5').disabled = true; // New
+  document.getElementById('voteChannel6').disabled = true; // New
+  document.getElementById('finishVoting').disabled = true;
+}
