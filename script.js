@@ -1,9 +1,8 @@
-// Access the TV screen elements
+
 const tvScreen = document.getElementById('tvScreen');
 const channelDisplay = document.getElementById('channelDisplay');
 const scoreboard = document.getElementById('scoreboard');
 
-// Keep track of votes
 const votes = {
   1: 0,
   2: 0,
@@ -13,7 +12,6 @@ const votes = {
   6: 0
 };
 
-// Channel info
 const channels = {
   1: { background: '#7f00ff', text: 'Channel 1' },
   2: { background: '#ff4c4c', text: 'Channel 2' },
@@ -26,7 +24,6 @@ const channels = {
 let totalVotes = 0;
 const maxVotes = 10;
 
-// Function to vote for a channel
 function vote(channel) {
   votes[channel]++;
   totalVotes++;
@@ -37,7 +34,6 @@ function vote(channel) {
   }
 }
 
-// Function to update scoreboard
 function updateScoreboard() {
   scoreboard.innerHTML = `
     <p>Channel 1: ${votes[1]} votes</p>
@@ -50,7 +46,6 @@ function updateScoreboard() {
   `;
 }
 
-// Function to finish voting and show winner
 function finishVoting() {
   disableVotingButtons();
   tvScreen.style.backgroundColor = 'black';
@@ -74,7 +69,6 @@ function finishVoting() {
   }, 3000);
 }
 
-// Disable all buttons when voting is over
 function disableVotingButtons() {
   for (let i = 1; i <= 6; i++) {
     document.getElementById(`voteChannel${i}`).disabled = true;
@@ -82,7 +76,6 @@ function disableVotingButtons() {
   document.getElementById('finishVoting').disabled = true;
 }
 
-// Add event listeners to buttons
 for (let i = 1; i <= 6; i++) {
   document.getElementById(`voteChannel${i}`).addEventListener('click', () => vote(i));
 }
