@@ -48,3 +48,7 @@ body {
   background-color: #aaa;
 }
 
+#scoreboard {
+  margin-top: 10px;
+  font-size: 14px;
+}
