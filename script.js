@@ -42,3 +42,16 @@ const channels = {
   5: { background: '#ffff00', text: 'Channel 5' }, // New Channel 5 (yellow)
   6: { background: '#ff69b4', text: 'Channel 6' }  // New Channel 6 (pink)
 };
+
+function updateScoreboard() {
+  scoreboard.innerHTML = `
+    <p>Channel 1: ${votes[1]} votes</p>
+    <p>Channel 2: ${votes[2]} votes</p>
+    <p>Channel 3: ${votes[3]} votes</p>
+    <p>Channel 4: ${votes[4]} votes</p>
+    <p>Channel 5: ${votes[5]} votes</p>
+    <p>Channel 6: ${votes[6]} votes</p>
+    <p>Total Votes: ${totalVotes}/${maxVotes}</p>
+  `;
+}
+
