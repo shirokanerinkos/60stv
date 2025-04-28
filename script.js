@@ -16,9 +16,19 @@ const channels = {
   4: { background: '#00ff7f', text: 'Channel 4' }
 };
 
+let totalVotes = 0;
+const maxVotes = 5; // Set how many total votes before automatic finish
+
 function vote(channelNumber) {
+  if (totalVotes >= maxVotes) return; // Prevent extra votes
+
   votes[channelNumber]++;
+  totalVotes++;
   updateScoreboard();
+
+  if (totalVotes >= maxVotes) {
+    finishVoting();
+  }
 }
 
 function finishVoting() {
@@ -48,6 +58,7 @@ function updateScoreboard() {
     <p>Channel 2: ${votes[2]} votes</p>
     <p>Channel 3: ${votes[3]} votes</p>
     <p>Channel 4: ${votes[4]} votes</p>
+    <p>Total Votes: ${totalVotes}/${maxVotes}</p>
   `;
 }
 
