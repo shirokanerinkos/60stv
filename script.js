@@ -1,37 +1,9 @@
+// Access the TV screen elements
 const tvScreen = document.getElementById('tvScreen');
 const channelDisplay = document.getElementById('channelDisplay');
 const scoreboard = document.getElementById('scoreboard');
 
-let totalVotes = 0;
-const maxVotes = 10; // Or whatever you want
-
-function finishVoting() {
-  // Disable voting immediately
-  disableVotingButtons();
-
-  // Show dramatic "And the winner is..." message
-  tvScreen.style.backgroundColor = 'black';
-  channelDisplay.innerText = 'And the winner is...';
-  scoreboard.innerHTML = ''; // Clear scoreboard
-
-  // Wait 3 seconds, then show the real winner
-  setTimeout(() => {
-    let winningChannel = 1;
-    let highestVotes = 0;
-
-    for (let channel in votes) {
-      if (votes[channel] > highestVotes) {
-        highestVotes = votes[channel];
-        winningChannel = channel;
-      }
-    }
-
-    // Update the TV to show the winner
-    const channelInfo = channels[winningChannel];
-    tvScreen.style.backgroundColor = channelInfo.background;
-    channelDisplay.innerText = `Winner: ${channelInfo.text} (${highestVotes} votes)`;
-  }, 3000); // 3000 milliseconds = 3 seconds
-}
+// Keep track of votes
 const votes = {
   1: 0,
   2: 0,
@@ -41,15 +13,31 @@ const votes = {
   6: 0
 };
 
+// Channel info
 const channels = {
   1: { background: '#7f00ff', text: 'Channel 1' },
   2: { background: '#ff4c4c', text: 'Channel 2' },
   3: { background: '#00bfff', text: 'Channel 3' },
   4: { background: '#00ff7f', text: 'Channel 4' },
-  5: { background: '#ffff00', text: 'Channel 5' }, // New Channel 5 (yellow)
-  6: { background: '#ff69b4', text: 'Channel 6' }  // New Channel 6 (pink)
+  5: { background: '#ffff00', text: 'Channel 5' },
+  6: { background: '#ff69b4', text: 'Channel 6' }
 };
 
+let totalVotes = 0;
+const maxVotes = 10; // You can change this
+
+// Function to vote for a channel
+function vote(channel) {
+  votes[channel]++;
+  totalVotes++;
+  updateScoreboard();
+
+  if (totalVotes >= maxVotes) {
+    finishVoting();
+  }
+}
+
+// Function to update scoreboard
 function updateScoreboard() {
   scoreboard.innerHTML = `
     <p>Channel 1: ${votes[1]} votes</p>
@@ -62,31 +50,40 @@ function updateScoreboard() {
   `;
 }
 
-document.getElementById('voteChannel1').addEventListener('click', () => vote(1));
-document.getElementById('voteChannel2').addEventListener('click', () => vote(2));
-document.getElementById('voteChannel3').addEventListener('click', () => vote(3));
-document.getElementById('voteChannel4').addEventListener('click', () => vote(4));
-document.getElementById('voteChannel5').addEventListener('click', () => vote(5));
-document.getElementById('voteChannel6').addEventListener('click', () => vote(6));
-document.getElementById('finishVoting').addEventListener('click', finishVoting);
+// Function to finish voting and show winner
+function finishVoting() {
+  disableVotingButtons();
+  tvScreen.style.backgroundColor = 'black';
+  channelDisplay.innerText = 'And the winner is...';
+  scoreboard.innerHTML = '';
 
-function vote(channel) {
-  votes[channel]++;
-  totalVotes++;
-  updateScoreboard();
+  setTimeout(() => {
+    let winningChannel = 1;
+    let highestVotes = 0;
 
-  if (totalVotes >= maxVotes) {
-    finishVoting();
-  }
+    for (let channel in votes) {
+      if (votes[channel] > highestVotes) {
+        highestVotes = votes[channel];
+        winningChannel = channel;
+      }
+    }
+
+    const channelInfo = channels[winningChannel];
+    tvScreen.style.backgroundColor = channelInfo.background;
+    channelDisplay.innerText = `Winner: ${channelInfo.text} (${highestVotes} votes)`;
+  }, 3000);
 }
 
-
+// Disable all buttons when voting is over
 function disableVotingButtons() {
-  document.getElementById('voteChannel1').disabled = true;
-  document.getElementById('voteChannel2').disabled = true;
-  document.getElementById('voteChannel3').disabled = true;
-  document.getElementById('voteChannel4').disabled = true;
-  document.getElementById('voteChannel5').disabled = true; // New
-  document.getElementById('voteChannel6').disabled = true; // New
+  for (let i = 1; i <= 6; i++) {
+    document.getElementById(`voteChannel${i}`).disabled = true;
+  }
   document.getElementById('finishVoting').disabled = true;
 }
+
+// Add event listeners to buttons
+for (let i = 1; i <= 6; i++) {
+  document.getElementById(`voteChannel${i}`).addEventListener('click', () => vote(i));
+}
+document.getElementById('finishVoting').addEventListener('click', finishVoting);
