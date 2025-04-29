@@ -26,7 +26,6 @@ const maxVotes = 10;
 function vote(channel) {
   votes[channel]++;
   totalVotes++;
-  updateScoreboard();
 
   if (totalVotes >= maxVotes) {
     finishVoting();
