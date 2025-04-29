@@ -1,3 +1,4 @@
+
 const tvScreen = document.getElementById('tvScreen');
 const channelDisplay = document.getElementById('channelDisplay');
 const scoreboard = document.getElementById('scoreboard');
@@ -11,13 +12,13 @@ const votes = {
   6: 0
 };
 
-const channels = {
-  1: { background: '#7f00ff', text: 'program 1' },
-  2: { background: '#ff4c4c', text: 'program 2' },
-  3: { background: '#00bfff', text: 'program 3' },
-  4: { background: '#00ff7f', text: 'program 4' },
-  5: { background: '#ffff00', text: 'program 5' },
-  6: { background: '#ff69b4', text: 'program 6' }
+const programs = {
+  1: { background: '#7f00ff', text: 'Program 1' },
+  2: { background: '#ff4c4c', text: 'Program 2' },
+  3: { background: '#00bfff', text: 'Program 3' },
+  4: { background: '#00ff7f', text: 'Program 4' },
+  5: { background: '#ffff00', text: 'Program 5' },
+  6: { background: '#ff69b4', text: 'Program 6' }
 };
 
 let totalVotes = 0;
@@ -32,8 +33,18 @@ function vote(channel) {
     finishVoting();
   }
 }
-  totalVotes++;
 
+function updateScoreboard() {
+  scoreboard.innerHTML = `
+    <p>Program 1: ${votes[1]} votes</p>
+    <p>Program 2: ${votes[2]} votes</p>
+    <p>Program 3: ${votes[3]} votes</p>
+    <p>Program 4: ${votes[4]} votes</p>
+    <p>Program 5: ${votes[5]} votes</p>
+    <p>Program 6: ${votes[6]} votes</p>
+    <p>Total Votes: ${totalVotes}/${maxVotes}</p>
+  `;
+}
 
 function finishVoting() {
   disableVotingButtons();
@@ -42,19 +53,19 @@ function finishVoting() {
   scoreboard.innerHTML = '';
 
   setTimeout(() => {
-    let winningChannel = 1;
+    let winningProgram = 1;
     let highestVotes = 0;
 
-    for (let channel in votes) {
-      if (votes[channel] > highestVotes) {
-        highestVotes = votes[channel];
-        winningChannel = channel;
+    for (let program in votes) {
+      if (votes[program] > highestVotes) {
+        highestVotes = votes[program];
+        winningProgram = program;
       }
     }
 
-    const channelInfo = channels[winningChannel];
-    tvScreen.style.backgroundColor = channelInfo.background;
-    channelDisplay.innerText = `Winner: ${channelInfo.text} (${highestVotes} votes)`;
+    const programInfo = programs[winningProgram];
+    tvScreen.style.backgroundColor = programInfo.background;
+    channelDisplay.innerText = `Winner: ${programInfo.text} (${highestVotes} votes)`;
   }, 3000);
 }
 
