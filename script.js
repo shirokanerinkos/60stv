@@ -34,17 +34,6 @@ function vote(channel) {
   }
 }
 
-function updateScoreboard() {
-  scoreboard.innerHTML = `
-    <p>Program 1: ${votes[1]} votes</p>
-    <p>Program 2: ${votes[2]} votes</p>
-    <p>Program 3: ${votes[3]} votes</p>
-    <p>Program 4: ${votes[4]} votes</p>
-    <p>Program 5: ${votes[5]} votes</p>
-    <p>Program 6: ${votes[6]} votes</p>
-    <p>Total Votes: ${totalVotes}/${maxVotes}</p>
-  `;
-}
 
 function finishVoting() {
   disableVotingButtons();
