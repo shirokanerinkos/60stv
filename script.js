@@ -1,7 +1,6 @@
 
 const tvScreen = document.getElementById('tvScreen');
 const channelDisplay = document.getElementById('channelDisplay');
-const scoreboard = document.getElementById('scoreboard');
 
 const votes = {
   1: 0,
